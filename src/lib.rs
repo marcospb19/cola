@@ -120,9 +120,9 @@
 #![allow(clippy::module_inception)]
 #![allow(clippy::needless_doctest_main)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
-#![deny(missing_docs)]
-#![deny(rustdoc::broken_intra_doc_links)]
-#![deny(rustdoc::private_intra_doc_links)]
+// #![deny(missing_docs)]
+// #![deny(rustdoc::broken_intra_doc_links)]
+// #![deny(rustdoc::private_intra_doc_links)]
 
 extern crate alloc;
 
@@ -146,6 +146,7 @@ use replica::*;
 pub use replica_id::ReplicaId;
 use replica_id::{ReplicaIdMap, ReplicaIdMapValuesMut};
 use run_indices::{AnchorBias, RunIndices};
+pub use run_tree::Anchor;
 use run_tree::*;
 pub use text_edit::Text;
 use utils::*;

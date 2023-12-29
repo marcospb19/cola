@@ -75,6 +75,13 @@ pub struct Replica {
 }
 
 impl Replica {
+    pub fn anchor_to_offset(&self, anchor: Anchor) -> Length {
+        let leaf_idx =
+            self.run_tree.run_indices.idx_at_anchor(anchor, todo!(), todo!());
+
+        self.run_tree.gtree.offset_of_leaf(leaf_idx)
+    }
+
     #[doc(hidden)]
     pub fn assert_invariants(&self) {
         self.run_tree.assert_invariants();
@@ -790,6 +797,16 @@ impl Replica {
     #[doc(hidden)]
     pub fn num_runs(&self) -> usize {
         self.run_tree.count_empty_leaves().1
+    }
+
+    pub fn offset_to_anchor(&self, offset: Length) -> Anchor {
+        let (leaf_idx, offset) = self.run_tree.gtree.leaf_at_offset(offset);
+
+        let leaf = self.run_tree.gtree.leaf(leaf_idx);
+
+        // Is this the same?
+        // Anchor::new(leaf.replica_id(), leaf.start())
+        Anchor::new(leaf.replica_id(), offset)
     }
 }
 

@@ -12,12 +12,12 @@ type Gtree = crate::Gtree<RUN_TREE_ARITY, EditRun>;
 #[cfg_attr(feature = "encode", derive(serde::Serialize, serde::Deserialize))]
 pub(crate) struct RunTree {
     /// The tree of runs.
-    gtree: Gtree,
+    pub(super) gtree: Gtree,
 
     /// A secondary data structure that allows to quickly find the
     /// [`LeafIdx`](crate::LeafIdx) of the run that contains a given
     /// [`Anchor`].
-    run_indices: RunIndices,
+    pub(super) run_indices: RunIndices,
 }
 
 impl RunTree {
@@ -999,33 +999,33 @@ impl core::fmt::Debug for Anchor {
 
 impl Anchor {
     #[inline(always)]
-    pub fn character_ts(&self) -> Length {
+    pub(crate) fn character_ts(&self) -> Length {
         self.offset
     }
 
     #[inline(always)]
-    pub fn is_zero(&self) -> bool {
+    pub(crate) fn is_zero(&self) -> bool {
         self.replica_id == 0
     }
 
     #[inline(always)]
-    pub fn new(replica_id: ReplicaId, offset: Length) -> Self {
+    pub(crate) fn new(replica_id: ReplicaId, offset: Length) -> Self {
         Self { replica_id, offset }
     }
 
     #[inline(always)]
-    pub fn offset(&self) -> Length {
+    pub(crate) fn offset(&self) -> Length {
         self.offset
     }
 
     /// A special value used to create an anchor at the start of the document.
     #[inline]
-    pub const fn zero() -> Self {
+    pub(crate) const fn zero() -> Self {
         Self { replica_id: 0, offset: 0 }
     }
 
     #[inline(always)]
-    pub fn replica_id(&self) -> ReplicaId {
+    pub(crate) fn replica_id(&self) -> ReplicaId {
         self.replica_id
     }
 }
